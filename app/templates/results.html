@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>Submitted Test Results</title>
+    {% endif %}
+</head>
+<body>
+    <ol>
+        {% for test in tests %}
+        <li><a href="/results/{{test.name}}">{{test.name}} {{test.score}}/110</a></li>
+        {% endfor %}
+    </ol>
+</body>
+</html>

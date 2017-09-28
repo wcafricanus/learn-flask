@@ -1,6 +1,9 @@
 from flask import render_template, flash, redirect
 from app import app
+from app.entities.test import Test
 from .forms import LoginForm
+import requests
+import json
 
 
 @app.route('/')
@@ -34,3 +37,18 @@ def login():
                            title='Sign In',
                            form=form)
 
+@app.route('/results', methods=['GET','POST'])
+def results():
+    url = app.config['API_URL']
+    url = url + 'test'
+    response = requests.get(url)
+    data = json.loads(response.content)
+    tests = data['_items']
+    app.tests = tests
+    return render_template('results.html',
+                           title=' Cognitive Test Results',
+                           tests=app.tests)
+
+@app.route('/results/<name>', methods=['GET'])
+def show_result(name):
+    return app.tests[1]['pic']
